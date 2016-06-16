@@ -55,8 +55,8 @@ cp -p %{SOURCE1} test/test.conf
 ## Start a testing redis server instance
 /usr/sbin/redis-server test/test.conf
 sleep 1
+cat test/db/stdout
 kill -0 `cat test/db/redis.pid`
-tail test/db/stdout
 
 ## Set locale because two tests fail in mock.
 ## https://github.com/redis/redis-rb/issues/345
