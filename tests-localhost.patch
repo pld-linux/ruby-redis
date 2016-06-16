@@ -29,3 +29,13 @@ error: Bad exit status from /tmp/B.7HxRqm/BUILD/tmp/rpm-tmp.98838 (%build)
  
      100.times do |idx|
        @r.set(idx.to_s, "foo#{idx}")
+--- redis-3.3.0/test/internals_test.rb~	2016-06-16 20:41:49.000000000 +0300
++++ redis-3.3.0/test/internals_test.rb	2016-06-16 20:47:51.844208610 +0300
+@@ -372,7 +372,6 @@
+     def af_family_supported(af)
+       hosts = {
+         Socket::AF_INET  => "127.0.0.1",
+-        Socket::AF_INET6 => "::1",
+       }
+ 
+       begin
