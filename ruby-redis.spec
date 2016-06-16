@@ -5,12 +5,12 @@
 %define pkgname redis
 Summary:	A Ruby client library for Redis
 Name:		ruby-%{pkgname}
-Version:	3.2.2
+Version:	3.3.0
 Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	https://rubygems.org/gems/%{pkgname}-%{version}.gem
-# Source0-md5:	859aed903d225d98ed2476f29bfe1ad3
+# Source0-md5:	432fa72404066a33ed4189bbf05396c4
 Source1:	redis-test.conf
 Patch0:		rubygem-redis-3.2.2-minitest.patch
 URL:		https://github.com/redis/redis-rb
