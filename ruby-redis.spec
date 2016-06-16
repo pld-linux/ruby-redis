@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	tests		# build without tests
+%bcond_with	tests		# build without tests
 
 %define pkgname redis
 Summary:	A Ruby client library for Redis
@@ -40,7 +40,7 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-%patch0 -p1
+#%patch0 -p1
 #%patch1 -p1
 
 # Install our test.conf file. Upstream dynamically generates this with Rake.
