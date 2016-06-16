@@ -1,0 +1,31 @@
+## Running Redis server, which does not support IPv6, nc cannot connect to it using localhost.
+## https://bugzilla.redhat.com/show_bug.cgi?id=978964
+## Use 127.0.0.1 instead or else it hangs while testing.
+## https://bugzilla.redhat.com/show_bug.cgi?id=978284#c2
+
+Error on PLD builders:
++ ruby -Ilib -e 'Dir.glob "./test/**/*_test.rb", &method(:require)'
+/tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:379:in `initialize': Address family not supported by protocol - socket(2) (Errno::EAFNOSUPPORT)
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:379:in `new'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:379:in `af_family_supported'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:422:in `block in <class:TestInternals>'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/helper.rb:60:in `class_eval'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/helper.rb:60:in `driver'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:421:in `<class:TestInternals>'
+	from /tmp/B.7HxRqm/BUILD/redis-3.3.0/test/internals_test.rb:5:in `<top (required)>'
+	from -e:1:in `require'
+	from -e:1:in `glob'
+	from -e:1:in `<main>'
+error: Bad exit status from /tmp/B.7HxRqm/BUILD/tmp/rpm-tmp.98838 (%build)
+
+--- redis-3.3.0/test/distributed_test.rb~	2016-06-16 20:41:49.000000000 +0300
++++ redis-3.3.0/test/distributed_test.rb	2016-06-16 20:44:25.266887277 +0300
+@@ -7,7 +7,7 @@
+   include Helper::Distributed
+ 
+   def test_handle_multiple_servers
+-    @r = Redis::Distributed.new ["redis://localhost:#{PORT}/15", *NODES]
++    @r = Redis::Distributed.new ["redis://127.0.0.1:#{PORT}/15", *NODES]
+ 
+     100.times do |idx|
+       @r.set(idx.to_s, "foo#{idx}")
