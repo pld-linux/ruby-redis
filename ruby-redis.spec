@@ -43,14 +43,19 @@ Documentation for %{name}.
 %patch0 -p1
 #%patch1 -p1
 
+# Install our test.conf file. Upstream dynamically generates this with Rake.
+# To avoid using rake, we use a static file.
+cp -p %{SOURCE1} test/test.conf
+
 %build
 # write .gemspec
 %__gem_helper spec
 
 %if %{with tests}
-# Install our test.conf file. Upstream dynamically generates this with Rake.
-# To avoid using rake, we use a static file.
-cp -p %{SOURCE1} test/test.conf
+port=6381
+
+sed -e "/^PORT/ s/6381/$port/" test/helper.rb
+sed -e "/^port/ s/6381/$port/" test/test.conf
 
 ## Start a testing redis server instance
 /usr/sbin/redis-server test/test.conf
