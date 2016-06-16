@@ -54,14 +54,16 @@ cp -p %{SOURCE1} test/test.conf
 %if %{with tests}
 port=6381
 
-sed -e "/^PORT/ s/6381/$port/" test/helper.rb
-sed -e "/^port/ s/6381/$port/" test/test.conf
+sed -i -e "/^PORT/ s/6381/$port/" test/helper.rb
+sed -i -e "/^port/ s/6381/$port/" test/test.conf
 
 ## Start a testing redis server instance
 /usr/sbin/redis-server test/test.conf
 sleep 1
 cat test/db/stdout
 kill -0 `cat test/db/redis.pid`
+## configure kill for redis-server
+trap 'kill -INT `cat test/db/redis.pid`' EXIT QUIT INT
 
 ## Set locale because two tests fail in mock.
 ## https://github.com/redis/redis-rb/issues/345
@@ -70,9 +72,6 @@ export LC_ALL=en_US.UTF-8
 ## Problems continue to surface with Minitest 5, so I've asked upstream how
 ## they want to proceed. https://github.com/redis/redis-rb/issues/487
 ruby -Ilib -e 'Dir.glob "./test/**/*_test.rb", &method(:require)'
-
-## Kill redis-server
-kill -INT `cat test/db/redis.pid`
 %endif
 
 %install
