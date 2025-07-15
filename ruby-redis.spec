@@ -40,8 +40,8 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-#%patch0 -p1
-#%patch1 -p1
+#%%patch0 -p1
+#%%patch1 -p1
 
 # Install our test.conf file. Upstream dynamically generates this with Rake.
 # To avoid using rake, we use a static file.
