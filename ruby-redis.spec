@@ -6,7 +6,7 @@
 Summary:	A Ruby client that tries to match Redis' API one-to-one
 Name:		ruby-%{pkgname}
 Version:	5.4.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
